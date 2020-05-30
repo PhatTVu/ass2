@@ -1,45 +1,47 @@
-/*input
-2
-*/
-
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-int main(int argc, char *argv[])
-{
-    /*Get input*/
-    int n;
-    int i;
-    pid_t prc_id;
-    pid_t p_prc_id;
-    scanf("%d", &n);
 
-    /*File pointer*/
-    FILE * fp;
+int main(){
 
-    /*Do fork()*/
-    for(i = 0; i < n; i++){  
-        fork();
-    }
+	/*Take input*/
+	printf("Enter number of fork call: ");
+	int n;
+	scanf("%d", &n);
 
-    /*Output*/
-    prc_id = getpid();
-    p_prc_id = getppid();
-    printf("Process id: %d\n", prc_id);
-    printf("Parent process id: %d\n", p_prc_id);
+	/*FIle pointer*/
+	FILE *fp;
+	fp = fopen ("question2.txt", "w");
 
-    /*Write output to file*/
-    fp = fopen ("output", "a");
-    fprintf (fp, "%s%d\n", "Process id: ",prc_id);
-    fprintf (fp, "%s%d\n", "Parent process id: ",p_prc_id);
+	/*PID*/
+	pid_t prc_id;
+	pid_t p_prc_id;
 
-    /*Close file to save data*/
-    fclose(fp);
+	/*Do fork*/
+	for (int i = 0; i < n; i++){
+		fflush(fp);
+		fork();
+	}
 
-    /*Sleep for 1 second*/
-    sleep(1);
+	/*Print output*/
+	prc_id = getpid();
+	p_prc_id = getppid();
+	printf("Process ID: %d\n", prc_id);
+	printf("Parent Process ID: %d\n", p_prc_id);
 
-    return 0;
+	/*Write output to file*/
+	fp = fopen("output", "a");
+	fprintf(fp, "%s%d\n", "Process ID: ", prc_id);
+	fprintf(fp, "%s%d\n", "Parent process ID: ", p_prc_id);
+	
+	/*Close file to save data*/
+	fclose(fp);
+
+	/*Sleep for 1 second*/
+	sleep(1);
+
+	return 0;
 }
