@@ -14,7 +14,7 @@ int main(){
 
 	/*FIle pointer*/
 	FILE *fp;
-	fp = fopen ("question2.txt", "w");
+	fp = fopen ("output", "a");
 
 	/*PID*/
 	pid_t prc_id;
@@ -33,7 +33,6 @@ int main(){
 	printf("Parent Process ID: %d\n", p_prc_id);
 
 	/*Write output to file*/
-	fp = fopen("output", "a");
 	fprintf(fp, "%s%d\n", "Process ID: ", prc_id);
 	fprintf(fp, "%s%d\n", "Parent process ID: ", p_prc_id);
 	
