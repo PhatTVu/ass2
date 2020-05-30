@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -14,27 +15,31 @@ int main(){
 
 	/*FIle pointer*/
 	FILE *fp;
-	fp = fopen ("output", "a");
+	fp = fopen("output", "a");
 
 	/*PID*/
 	pid_t prc_id;
 	pid_t p_prc_id;
+	pid_t id;
 
 	/*Do fork*/
 	for (int i = 0; i < n; i++){
 		fflush(fp);
-		fork();
+		id = fork();
+
+		//Child process
+		if(id == 0){
+			/*Print output*/
+			prc_id = getpid();
+			p_prc_id = getppid();
+			printf("Process ID: %d\n", prc_id);
+			printf("Parent Process ID: %d\n", p_prc_id);
+
+			/*Write output to file*/
+			fprintf(fp, "%s%d\n", "Process ID: ", prc_id);
+			fprintf(fp, "%s%d\n", "Parent process ID: ", p_prc_id);
+		}
 	}
-
-	/*Print output*/
-	prc_id = getpid();
-	p_prc_id = getppid();
-	printf("Process ID: %d\n", prc_id);
-	printf("Parent Process ID: %d\n", p_prc_id);
-
-	/*Write output to file*/
-	fprintf(fp, "%s%d\n", "Process ID: ", prc_id);
-	fprintf(fp, "%s%d\n", "Parent process ID: ", p_prc_id);
 	
 	/*Close file to save data*/
 	fclose(fp);
