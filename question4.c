@@ -88,6 +88,7 @@ int main(){
 	/*Record the first PID with level 0*/
 	prc_id = getpid();
 	printf("Process ID: %d , Level: %d\n", prc_id, 0);
+	fprintf(fp, "%s%d%s%d\n", "Process ID: ", prc_id, " , Level: ", 0);
 	insert(t, prc_id, 0);
 
 	/*Do fork*/
@@ -113,10 +114,7 @@ int main(){
 			printf("Process ID: %d , Level: %d , Parent ID: %d\n", prc_id, childLevel, p_prc_id);
 
 			/*Write output to file*/
-			fprintf(fp, "%s%d\n", "Process ID: ", prc_id);
-			fprintf(fp, "%s%d\n", "Level: ", i+1);
-			fprintf(fp, "%s%d\n", "Parent process ID: ", p_prc_id);
-
+			fprintf(fp, "%s%d%s%d%s%d\n", "Process ID: ", prc_id, " , Level: ", childLevel, " , Parent ID: ", p_prc_id);
 		}
 	}
 	
